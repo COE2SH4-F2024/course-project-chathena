@@ -9,8 +9,7 @@
 
 using namespace std;
 
-class Food
-{
+class Food{
     private:
         objPos food;
     public:
