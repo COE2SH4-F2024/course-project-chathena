@@ -61,6 +61,7 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
     
@@ -73,17 +74,18 @@ void DrawScreen(void)
     int boardX = myGM->getBoardSizeX(); 
     int boardY = myGM->getBoardSizeY(); 
     objPos playerPos = myPlayer->getPlayerPos();
-    objPos foodPos = food->getFoodPos();
+    objPos foodPos = myFood->getFoodPos();
+    int playerX = playerPos.pos->x;
+    int playerY = playerPos.pos->y;
 
-    //Cheryl's drawscreen
     MacUILib_printf("##############################\n");
-   for (int y = 1; y < boardY - 1; y++){
+    for (int y = 1; y < boardY - 1; y++){
         for (int x = 0; x < boardX; x++){
             if (x == 0){
                 MacUILib_printf("#");
             }
             if (x >= 1 && x <= boardX - 2){
-                if (y == playerPos.pos->y && x == playerPos.pos->x){
+                if (y == playerY && x == playerX){
                     MacUILib_printf("%c", playerPos.symbol);
                 }
                 else if(y == foodPos.pos->x && x == foodPos.pos->y){
@@ -96,19 +98,6 @@ void DrawScreen(void)
             if (x == boardX - 1){
                 MacUILib_printf("#\n");
             }
-             
-            // else{
-            //     int k,flag = 0;
-            //     for(k = 0; k < itembin[k]; k++)
-            //     {
-            //         if(itembin[k].x == j && itembin[k].y == i)
-            //         {
-            //             MacUILib_printf("%c", itembin[k].character);
-            //             flag = 1;
-            //             break;
-            //         }
-            //     }
-
         }
     }
    MacUILib_printf("##############################\n");

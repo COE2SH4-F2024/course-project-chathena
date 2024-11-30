@@ -12,11 +12,14 @@ using namespace std;
 class Food{
     private:
         objPos food;
+        int count;
     public:
         Food();
-        Food();
+        ~Food();
+        Food(const Food& other);
+        Food& operator = (const Food& other);
         objPos getFoodPos() const;
-        void generatefood(objPos blockOff);
+        void generatefood(objPos blockOff, int boardX, int boardY, int playerX, int playerY);
 
 };
 

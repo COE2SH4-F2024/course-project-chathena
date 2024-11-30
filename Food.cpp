@@ -1,45 +1,45 @@
 #include "Food.h"
 #include "MacUILib.h"
+#include "GameMechs.h"
 Food::Food()
 {
     food.setObjPos(-10, -10, 'o');
 }
-Food::Food()
+Food::~Food()
 {
-    food.setObjPos(-10, -10, 'o');
+    
 }
+Food::Food(const Food& other)
+{
 
+}
+Food& Food::operator = (const Food& other)
+{
+    if(this == &other)
+        return *this;
+    food = other.food;
+    count = other.count;
+    return *this;
+}
 objPos Food::getFoodPos() const
 {
     return food;
 }
-void Food::generatefood(objPos blockOff)
-{
-    // int i,j;
-    // for(i = 0; i < 2; i++)
-    // {
-    //     int flag = 0;
-    //     while(!flag)
-    //     {
-    //         foodPos.pos->x = rand() % (xRange - 1) + 1;
-    //         itembin[i].y = rand() % (yRange -1) + 1;
-    //         itembin[i].character = str[rand() % my_strlen(str)];
-    //         flag = 1;
-    //         if(itembin[i].x == player.x && itembin[i].y == player.y)
-    //             {
-    //                 flag = 0;
+void Food::generatefood(objPos blockOff, int boardX, int boardY, int playerX, int playerY)
+{   
+    bool valid = false ;
+    while(!valid)
+    {
+        int newX = rand() % (boardX - 1) + 1;
+        int newY = rand() % (boardY - 1) + 1;
 
-    //             }
-    //         for(j = 0; j < i; j++)
-    //         {
-    //             if(itembin[i].x == itembin[j].x && itembin[i].y == itembin[j].y)
-    //             {
-    //                 flag = 0;
-    //                 break;
-    //             }
-    //         }
-    //     }
-    // }
+        if(newX == playerX && newY == playerY)
+            continue;
+        food.setObjPos(newX, newY, 'o');
+        valid = true;
+            
+    }
+    
     
    
 }
