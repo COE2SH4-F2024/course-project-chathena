@@ -5,17 +5,24 @@
 
 objPosArrayList::objPosArrayList()
 {
-    
+    int sizeList, arrayCapacity = 200;
+    aList = new arrayCapacity[200];
+
+
+
 }
 
 objPosArrayList::~objPosArrayList()
 {
-
+    for (int i - 0; i < arrayCapacity; i++)
+    {
+        delete arrayCapacity[i];
+    }  
 }
 
 int objPosArrayList::getSize() const
 {
-
+return listSize;
 }
 
 void objPosArrayList::insertHead(objPos thisPos)
@@ -40,15 +47,16 @@ void objPosArrayList::removeTail()
 
 objPos objPosArrayList::getHeadElement() const
 {
-    
+    return head;
 }
 
 objPos objPosArrayList::getTailElement() const
 {
-    
+    return tail;
 }
 
 objPos objPosArrayList::getElement(int index) const
 {
-    
+    return element[index];
+    listSize++;
 }
