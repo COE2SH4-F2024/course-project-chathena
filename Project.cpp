@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "GameMechs.h"
 #include "Food.h"
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -50,7 +52,16 @@ void Initialize(void)
     myGM = new GameMechs();
     myFood = new Food();
     myPlayer = new Player(myGM);
-  
+
+    //seeding the random iteger generation function
+    srand(time(NULL));
+
+    //initial food position generation
+    int boardX = myGM->getBoardSizeX(); 
+    int boardY = myGM->getBoardSizeY();
+    objPos initialplayerPos = myPlayer->getPlayerPos();
+    myFood->generatefood(initialplayerPos, boardX, boardY);
+    
 }
  
 void GetInput(void)
@@ -64,6 +75,16 @@ void RunLogic(void)
     
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+    objPos playerPos = myPlayer->getPlayerPos();
+    objPos foodPos = myFood->getFoodPos();
+    if(playerPos.pos->x == foodPos.pos->x && playerPos.pos->y == foodPos.pos->y)
+    { 
+        int boardX = myGM->getBoardSizeX(); 
+        int boardY = myGM->getBoardSizeY();
+        myFood->generatefood(playerPos, boardX, boardY);
+    }
+    
+
     
 }
 
@@ -88,7 +109,7 @@ void DrawScreen(void)
                 if (y == playerY && x == playerX){
                     MacUILib_printf("%c", playerPos.symbol);
                 }
-                else if(y == foodPos.pos->x && x == foodPos.pos->y){
+                else if(x == foodPos.pos->x && y == foodPos.pos->y){
                 MacUILib_printf("%c", foodPos.symbol);
             }
                 else{
@@ -100,8 +121,10 @@ void DrawScreen(void)
             }
         }
     }
-   MacUILib_printf("##############################\n");
-   MacUILib_printf("player[x, y] = [%d, %d], %c", playerPos.pos->x, playerPos.pos->y, playerPos.symbol);   
+    MacUILib_printf("##############################\n");
+    MacUILib_printf("player[x, y] = [%d, %d], %c", playerPos.pos->x, playerPos.pos->y, playerPos.symbol);
+    MacUILib_printf("food[x, y] = [%d, %d], %c", foodPos.pos->x, foodPos.pos->y, foodPos.symbol);
+
 }
 
 void LoopDelay(void)
