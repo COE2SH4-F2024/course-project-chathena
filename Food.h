@@ -19,7 +19,7 @@ class Food{
         Food(const Food& other);
         Food& operator = (const Food& other);
         objPos getFoodPos() const;
-        void generatefood(objPos blockOff, int boardX, int boardY, int playerX, int playerY);
+        void generatefood(objPos blockOff, int boardX, int boardY);
 
 };
 
