@@ -14,7 +14,8 @@ Food::~Food()
 }
 Food::Food(const Food& other)
 {
-
+    food = other.food;
+    count = other.count;
 }
 Food& Food::operator = (const Food& other)
 {

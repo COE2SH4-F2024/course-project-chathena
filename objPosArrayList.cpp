@@ -8,7 +8,7 @@ using namespace std;
 
 objPosArrayList::objPosArrayList()
 {
-    listSize = 0;
+    listSize = 5;
     arrayCapacity = ARRAY_MAX_CAP;
     aList = new objPos[ARRAY_MAX_CAP];
 }
@@ -51,7 +51,6 @@ void objPosArrayList::insertHead(objPos thisPos)
 void objPosArrayList::insertTail(objPos thisPos)
 {
     if(listSize >= arrayCapacity){
-        //cout << "array full";
         return;
     }
 
@@ -81,11 +80,17 @@ void objPosArrayList::removeTail()
 
 objPos objPosArrayList::getHeadElement() const
 {
+    if (listSize <= 0){
+        throw out_of_range("Index out of bounds");
+    }
     return aList[0];
 }
 
 objPos objPosArrayList::getTailElement() const
 {
+    if (listSize <= 0){
+        throw out_of_range("Index out of bounds");
+    }
     return aList[listSize - 1];
 }
 
