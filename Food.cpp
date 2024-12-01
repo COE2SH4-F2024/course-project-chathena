@@ -30,6 +30,7 @@ objPos Food::getFoodPos() const
 }
 void Food::generatefood(objPos blockOff, int boardX, int boardY)
 {   
+
     bool valid = false ;
     while(!valid)
     {
