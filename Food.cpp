@@ -4,12 +4,12 @@
 #include "objPosArrayList.h"
 #include <stdlib.h>
 #include <time.h>
-
+//constructor 
 Food::Food()
 {
     foodBucket = new objPosArrayList();
 }
-
+//destructor
 Food::~Food()
 {
     delete foodBucket;    
@@ -26,7 +26,8 @@ void Food::generatefood(objPosArrayList* blockOff)
     }
 
 
-
+    //generating the regular food position and ensuring it doesn't interrupt
+    // the player and the other generated foods 
     for (int i = 0; i < 3; i++){
         do{
             valid = true;
@@ -54,7 +55,8 @@ void Food::generatefood(objPosArrayList* blockOff)
 
         foodBucket->insertHead(Food);
     }
-    
+    //generating the super food position and ensuring it doesn't interrupt
+    // the player and the other generated foods
     for (int i = 0; i < 2; i++){
         do{
             valid = true;

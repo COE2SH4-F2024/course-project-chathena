@@ -1,6 +1,6 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
-
+//defult constructor 
 GameMechs::GameMechs()
 {
     input = 0;
@@ -23,10 +23,10 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 }
 
-// do you need a destructor?
+// destructor
 GameMechs::~GameMechs()
 {
-    //at this moment no, beacause we don't have a heap member  
+    //no need, beacause we don't have a heap member  
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -41,10 +41,12 @@ bool GameMechs::getLoseFlagStatus() const
     
 void GameMechs::collectAsyncInput()
 {
+    //checking if user inputed a charachter
     if(MacUILib_hasChar())
     {
         input = MacUILib_getChar();
     }
+    //setting the exitFlag to true when the user pushes the space bar  
     if(input == ' '){
         exitFlag = true;
     } 

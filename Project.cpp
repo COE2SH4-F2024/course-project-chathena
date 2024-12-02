@@ -10,7 +10,7 @@
 using namespace std;
 
 #define DELAY_CONST 100000
-
+//declaring global pointers
 Player *myPlayer;
 GameMechs *myGM;
 Food *myFood;
@@ -27,7 +27,7 @@ void CleanUp(void);
 
 int main(void)
 {
-    srand(time(NULL));
+    srand(time(NULL)); //Seeding the random integer generation function with current time
 
     Initialize();
 
@@ -49,10 +49,12 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    //initializing the global pointers
     myGM = new GameMechs();
     myFood = new Food();
     myPlayer = new Player(myGM, myFood);
 
+    //generating the initial radom food positions at the start of the game 
     objPosArrayList* playerPosList = myPlayer->getPlayerPos();
     myFood->generatefood(playerPosList);
     
@@ -77,6 +79,7 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen(); 
 
+    //getting the size of the board and storing it in a local variable to reduce the number of times the function is called
     int boardX = myGM->getBoardSizeX(); 
     int boardY = myGM->getBoardSizeY();
 
