@@ -164,7 +164,7 @@ void Player::increasePlayerLength(){
 
 bool Player::checkSelfCollision(){
     for (int j = 1; j < playerPosList->getSize(); j++){
-        if (playerPosList->getHeadElement().isPosEqual(&playerPosList->getElement(j))) {
+        if (playerPosList->getElement(j).isPosEqual(&(playerPosList->getHeadElement()))){
             return true;
         }
     }
