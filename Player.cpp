@@ -135,7 +135,7 @@ void Player::movePlayer()
         if(temphead.isPosEqual(&myFood)){
         eatfood = true;
             if(foodPos->getElement(i).getSymbol() == '$'){
-                for (int k = 0; k < 9; k++){
+                for (int k = 0; k < 10; k++){
                     mainGameMechsRef -> incrementScore();
                 }
             }
@@ -163,10 +163,15 @@ void Player::increasePlayerLength(){
 }
 
 bool Player::checkSelfCollision(){
+    if (playerPosList->getSize() < 2){
+        return false;
+    }
+    
     for (int j = 1; j < playerPosList->getSize(); j++){
-        if (playerPosList->getElement(j).isPosEqual(&(playerPosList->getHeadElement()))){
+        if (((playerPosList->getElement(j).pos->x) == (playerPosList->getHeadElement().pos->x)) && ((playerPosList->getElement(j).pos->y) == (playerPosList->getHeadElement().pos->y))){
             return true;
         }
     }
+
     return false;
 }

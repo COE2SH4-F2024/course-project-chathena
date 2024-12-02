@@ -138,20 +138,20 @@ void DrawScreen(void)
     MacUILib_printf("##############################\n");
     MacUILib_printf("Player: ");
     // debugging
-    for (int i = 0; i < playerPosList->getSize(); i++) {
-        objPos part = playerPosList->getElement(i);
-        MacUILib_printf("[%d, %d, %c] ", part.pos->x, part.pos->y, part.symbol);
-    }
-        MacUILib_printf("\n");
-    MacUILib_printf("food[x, y] = [%d, %d], %c", foodPos->getHeadElement().pos->x, foodPos->getHeadElement().pos->y, foodPos->getHeadElement().symbol);
+    // for (int i = 0; i < playerPosList->getSize(); i++) {
+    //     objPos part = playerPosList->getElement(i);
+    //     MacUILib_printf("[%d, %d, %c]\n", part.pos->x, part.pos->y, part.symbol);
+    // }
+    //     MacUILib_printf("\n");
+    // MacUILib_printf("food[x, y] = [%d, %d], %c\n", foodPos->getHeadElement().pos->x, foodPos->getHeadElement().pos->y, foodPos->getHeadElement().symbol);
     
     MacUILib_printf("The score is: %d\n", myGM->getScore());
     
     if(myGM->getLoseFlagStatus() == true && myGM->getExitFlagStatus() == true){
-        MacUILib_printf("You lost :(");
+        MacUILib_printf("You lost :(\n");
     }
     else if (myGM->getExitFlagStatus() == true){
-        MacUILib_printf("You exited the game.");
+        MacUILib_printf("You exited the game.\n");
     }
 }
 
