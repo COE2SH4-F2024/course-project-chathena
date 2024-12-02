@@ -34,6 +34,8 @@ objPos& objPos:: operator=(const objPos &d){
     
 	if(this != &d){
 
+        delete this;
+
         pos = new Pos;
         pos->x = d.pos->x;
         pos->y = d.pos->y;

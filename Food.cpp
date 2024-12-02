@@ -17,87 +17,69 @@ Food::~Food()
 
 void Food::generatefood(objPosArrayList* blockOff)
 {   
-
     bool valid = true;
     GameMechs myGM;
     objPos Food; 
 
-    // ?????? IDK ???????
-    foodBucket->removeTail();
-    foodBucket->removeTail();
+    for (int k = 0; k < 5; k++){
+        foodBucket->removeTail();
+    }
 
-    do{
-        valid = true;
 
-        int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
-        int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
 
-        Food.setObjPos(newX, newY, 'o');
+    for (int i = 0; i < 3; i++){
+        do{
+            valid = true;
 
-        for (int i = 0; i < blockOff->getSize(); i++){
-            objPos current = blockOff->getElement(i);
-            if(Food.isPosEqual(&current)){
-                valid = false;
+            int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
+            int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
+
+            Food.setObjPos(newX, newY, 'o');
+
+            for (int i = 0; i < blockOff->getSize(); i++){
+                objPos current = blockOff->getElement(i);
+                if(Food.isPosEqual(&current)){
+                    valid = false;
+                }
             }
-        }
-    }while (!valid);
 
-    foodBucket->insertHead(Food);
+            for (int j = 0; j < foodBucket->getSize(); j++){
+                objPos thisFood = foodBucket->getElement(j);
+                if(Food.isPosEqual(&thisFood)){
+                    valid = false;
+                }
+            }
 
-    do{
-        valid = true;
+        }while (!valid);
 
-        int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
-        int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
+        foodBucket->insertHead(Food);
+    }
+    
+    for (int i = 0; i < 2; i++){
+        do{
+            valid = true;
 
-        Food.setObjPos(newX, newY, '$');
+            int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
+            int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
 
-        objPos headelement = foodBucket->getHeadElement();
-            if(Food.isPosEqual(&headelement)){
-                valid = false;
-        }
+            Food.setObjPos(newX, newY, '$');
 
-    }while (!valid);
+            for (int j = 0; j < foodBucket->getSize(); j++){
+                objPos headelement = foodBucket->getHeadElement();
+                if(Food.isPosEqual(&headelement)){
+                    valid = false;
+                }
+            }
 
-    foodBucket->insertTail(Food);
+        }while (!valid);
+
+        foodBucket->insertHead(Food);
+    }
 }
 
 objPosArrayList* Food::getFoodPos() const
 {
     return foodBucket;
 }
-
-
-    // while(!valid)
-    // {
-    //     int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
-    //     int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
-
-    //     for(int i = 0; i < blockOff->getSize(); i++)
-    //     {
-    //         objPos current = blockOff->getElement(i);
-    //         if (Food.isPosEqual(&current)){
-    //             valid = false;
-    //         }   
-    //     } 
-        
-    //     food.setObjPos(newX, newY, 'o');
-    // }
-    
-    // foodBucket->insertHead(Food);
-
-    //  while(!valid)
-    // {
-    //     int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
-    //     int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
-
-    //     objPos current = foodBucket->getHeadElement();
-    //     if (Food.isPosEqual(&current)){
-    //         valid = false;
-    //     }     
-
-    //     food.setObjPos(newX, newY, '$');  
-    // }
-    // foodBucket->insertTail(Food);  
 
 

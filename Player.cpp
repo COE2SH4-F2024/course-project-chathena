@@ -81,7 +81,7 @@ void Player::movePlayer()
     // PPA3 Finite State Machine logic
     // Iteration 3:
 
-    //create temp objpos to calcualate the new head posiition
+    // create temp objpos to calculate the new head posiition
     // use the the first element if the poslist as the head position
     
 
@@ -136,10 +136,9 @@ void Player::movePlayer()
         eatfood = true;
             if(foodPos->getElement(i).getSymbol() == '$'){
                 for (int k = 0; k < 10; k++){
-                    mainGameMechsRef -> incrementScore();
+                    mainGameMechsRef->incrementScore();
                 }
             }
-
             else{
                 mainGameMechsRef->incrementScore();
             }
@@ -163,15 +162,10 @@ void Player::increasePlayerLength(){
 }
 
 bool Player::checkSelfCollision(){
-    if (playerPosList->getSize() < 4){
-        return false;
-    }
-    
     for (int j = 3 ; j < playerPosList->getSize(); j++){
         if (((playerPosList->getElement(j).pos->x) == (playerPosList->getHeadElement().pos->x)) && ((playerPosList->getElement(j).pos->y) == (playerPosList->getHeadElement().pos->y))){
             return true;
         }
     }
-
     return false;
 }
