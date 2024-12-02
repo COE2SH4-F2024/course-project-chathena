@@ -123,7 +123,7 @@ void Player::movePlayer()
 
     if (checkSelfCollision() == true){
         mainGameMechsRef->setLoseFlag();
-        // mainGameMechsRef->setExitTrue();
+        mainGameMechsRef->setExitTrue();
     }
 
 
@@ -163,11 +163,11 @@ void Player::increasePlayerLength(){
 }
 
 bool Player::checkSelfCollision(){
-    if (playerPosList->getSize() < 2){
+    if (playerPosList->getSize() < 4){
         return false;
     }
     
-    for (int j = 1; j < playerPosList->getSize(); j++){
+    for (int j = 3 ; j < playerPosList->getSize(); j++){
         if (((playerPosList->getElement(j).pos->x) == (playerPosList->getHeadElement().pos->x)) && ((playerPosList->getElement(j).pos->y) == (playerPosList->getHeadElement().pos->y))){
             return true;
         }
