@@ -1,6 +1,7 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
-//defult constructor 
+
+//default constructor 
 GameMechs::GameMechs()
 {
     input = 0;
@@ -26,7 +27,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // destructor
 GameMechs::~GameMechs()
 {
-    //no need, beacause we don't have a heap member  
+    // no need, beacause we don't have a heap member  
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -41,7 +42,7 @@ bool GameMechs::getLoseFlagStatus() const
     
 void GameMechs::collectAsyncInput()
 {
-    //checking if user inputed a charachter
+    //checking if user inputed a character
     if(MacUILib_hasChar())
     {
         input = MacUILib_getChar();

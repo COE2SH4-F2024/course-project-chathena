@@ -21,12 +21,13 @@ void Food::generatefood(objPosArrayList* blockOff)
     GameMechs myGM;
     objPos Food; 
 
-    for (int k = 0; k < 5; k++){
+    // deletes current food on DrawScreen after collision occurs with snake and food
+    while (foodBucket->getSize() > 0){
         foodBucket->removeTail();
     }
 
 
-    //generating the regular food position and ensuring it doesn't interrupt
+    // generating the regular food position (o) and ensuring it doesn't interrupt
     // the player and the other generated foods 
     for (int i = 0; i < 3; i++){
         do{
@@ -41,6 +42,7 @@ void Food::generatefood(objPosArrayList* blockOff)
                 objPos current = blockOff->getElement(i);
                 if(Food.isPosEqual(&current)){
                     valid = false;
+                    break;
                 }
             }
 
@@ -48,6 +50,7 @@ void Food::generatefood(objPosArrayList* blockOff)
                 objPos thisFood = foodBucket->getElement(j);
                 if(Food.isPosEqual(&thisFood)){
                     valid = false;
+                    break;
                 }
             }
 
@@ -55,7 +58,7 @@ void Food::generatefood(objPosArrayList* blockOff)
 
         foodBucket->insertHead(Food);
     }
-    //generating the super food position and ensuring it doesn't interrupt
+    //generating the super food position ($) and ensuring it doesn't interrupt
     // the player and the other generated foods
     for (int i = 0; i < 2; i++){
         do{
@@ -66,10 +69,19 @@ void Food::generatefood(objPosArrayList* blockOff)
 
             Food.setObjPos(newX, newY, '$');
 
-            for (int j = 0; j < foodBucket->getSize(); j++){
-                objPos headelement = foodBucket->getHeadElement();
-                if(Food.isPosEqual(&headelement)){
+            for (int i = 0; i < blockOff->getSize(); i++){
+                objPos current = blockOff->getElement(i);
+                if(Food.isPosEqual(&current)){
                     valid = false;
+                    break;
+                }
+            }
+
+            for (int j = 0; j < foodBucket->getSize(); j++){
+                objPos thisFood = foodBucket->getElement(j);
+                if(Food.isPosEqual(&thisFood)){
+                    valid = false;
+                    break;
                 }
             }
 
@@ -78,7 +90,7 @@ void Food::generatefood(objPosArrayList* blockOff)
         foodBucket->insertHead(Food);
     }
 }
-
+// receive position of food
 objPosArrayList* Food::getFoodPos() const
 {
     return foodBucket;

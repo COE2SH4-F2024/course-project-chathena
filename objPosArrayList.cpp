@@ -7,6 +7,8 @@ using namespace std;
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
 
+
+// default constructor
 objPosArrayList::objPosArrayList()
 {
     listSize = 0;
@@ -14,11 +16,13 @@ objPosArrayList::objPosArrayList()
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
+// destructor
 objPosArrayList::~objPosArrayList()
 {
     delete[] aList;
 }
 
+// copy constructor
 objPosArrayList::objPosArrayList(const objPosArrayList &d)
 {
     listSize = d.listSize;
@@ -30,6 +34,7 @@ objPosArrayList::objPosArrayList(const objPosArrayList &d)
     }
 }
 
+// copy assignment operator
 objPosArrayList& objPosArrayList::operator=(const objPosArrayList& d)
 {
     if (this != &d){
