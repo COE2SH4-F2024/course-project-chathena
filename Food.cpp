@@ -1,50 +1,103 @@
 #include "Food.h"
 #include "MacUILib.h"
 #include "GameMechs.h"
+#include "objPosArrayList.h"
 #include <stdlib.h>
 #include <time.h>
 
 Food::Food()
 {
-    food.setObjPos(-10, -10, 'o');
+    foodBucket = new objPosArrayList();
 }
+
 Food::~Food()
 {
-    
+    delete foodBucket;    
 }
-Food::Food(const Food& other)
-{
-    food = other.food;
-    count = other.count;
-}
-Food& Food::operator = (const Food& other)
-{
-    if(this == &other)
-        return *this;
-    food = other.food;
-    count = other.count;
-    return *this;
-}
-objPos Food::getFoodPos() const
-{
-    return food;
-}
-void Food::generatefood(objPos blockOff, int boardX, int boardY)
+
+void Food::generatefood(objPosArrayList* blockOff)
 {   
 
-    bool valid = false ;
-    while(!valid)
-    {
-        int newX = rand() % (boardX - 2) + 1;
-        int newY = rand() % (boardY - 2) + 1;
+    bool valid = true;
+    GameMechs myGM;
+    objPos Food; 
 
-        if(newX == blockOff.pos->x && newY == blockOff.pos->y)
-            continue;
-        food.setObjPos(newX, newY, 'o');
+    // ?????? IDK ???????
+    foodBucket->removeTail();
+    foodBucket->removeTail();
+
+    do{
         valid = true;
-            
-    }
-    
-    
-   
+
+        int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
+        int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
+
+        Food.setObjPos(newX, newY, 'o');
+
+        for (int i = 0; i < blockOff->getSize(); i++){
+            objPos current = blockOff->getElement(i);
+            if(Food.isPosEqual(&current)){
+                valid = false;
+            }
+        }
+    }while (!valid);
+
+    foodBucket->insertHead(Food);
+
+    do{
+        valid = true;
+
+        int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
+        int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
+
+        Food.setObjPos(newX, newY, '$');
+
+        objPos headelement = foodBucket->getHeadElement();
+            if(Food.isPosEqual(&headelement)){
+                valid = false;
+        }
+
+    }while (!valid);
+
+    foodBucket->insertTail(Food);
 }
+
+objPosArrayList* Food::getFoodPos() const
+{
+    return foodBucket;
+}
+
+
+    // while(!valid)
+    // {
+    //     int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
+    //     int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
+
+    //     for(int i = 0; i < blockOff->getSize(); i++)
+    //     {
+    //         objPos current = blockOff->getElement(i);
+    //         if (Food.isPosEqual(&current)){
+    //             valid = false;
+    //         }   
+    //     } 
+        
+    //     food.setObjPos(newX, newY, 'o');
+    // }
+    
+    // foodBucket->insertHead(Food);
+
+    //  while(!valid)
+    // {
+    //     int newX = rand() % (myGM.getBoardSizeX() - 2) + 1;
+    //     int newY = rand() % (myGM.getBoardSizeY() - 2) + 1;
+
+    //     objPos current = foodBucket->getHeadElement();
+    //     if (Food.isPosEqual(&current)){
+    //         valid = false;
+    //     }     
+
+    //     food.setObjPos(newX, newY, '$');  
+    // }
+    // foodBucket->insertTail(Food);  
+
+

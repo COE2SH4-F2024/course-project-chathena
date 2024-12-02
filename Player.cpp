@@ -3,17 +3,21 @@
 #include "objPosArrayList.h"
 #include "Food.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include <iostream>
 
-Player::Player(GameMechs* thisGMRef)
+
+Player::Player(GameMechs* thisGMRef, Food* foodRef)
 {
     mainGameMechsRef = thisGMRef;
+    thisfoodRef = foodRef;
     playerPosList = new objPosArrayList();
     myDir = STOP;
     
 
     // more actions to be included
     //the starting position of the head
-    objPos headPos(thisGMRef->getBoardSizeX() / 2, thisGMRef->getBoardSizeY() / 2, '@');
+    objPos headPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '@');
 
     playerPosList->insertHead(headPos);
 }
@@ -36,6 +40,7 @@ void Player::updatePlayerDir()
 {
         // PPA3 input processing logic  
         char input = mainGameMechsRef->getInput();
+
         switch(input){
             case 'w':
             case 'W': 
@@ -78,11 +83,13 @@ void Player::movePlayer()
 
     //create temp objpos to calcualate the new head posiition
     // use the the first element if the poslist as the head position
-    objPos temphead = playerPosList->getHeadElement();
-    int boardY = mainGameMechsRef->getBoardSizeY();
+    
+
     int boardX = mainGameMechsRef->getBoardSizeX();
-    Food* myFood;
-    objPos foodPos = myFood->getFoodPos();
+    int boardY = mainGameMechsRef->getBoardSizeY();
+    bool eatfood = false;
+
+    objPos temphead = playerPosList->getHeadElement();
 
     if (myDir == UP){
         temphead.pos->y--;
@@ -112,18 +119,54 @@ void Player::movePlayer()
         }
     } 
 
-    
-    // if(temphead.pos->x == foodPos.pos->x && temphead.pos->y == foodPos.pos->y){
-    //     myFood->generatefood(temphead, boardX, boardY);
-    // }
-    // playerPosList->insertHead(temphead);
-    // if(temphead.isPosEqual(&foodPos)){
-    //    myFood->generatefood(temphead, boardX, boardY);
-    // else{
-    //     playerPosList->removeTail();
-        
-    // } 
+    playerPosList->insertHead(temphead);
 
-} 
+    if (checkSelfCollision() == true){
+        mainGameMechsRef->setLoseFlag();
+        // mainGameMechsRef->setExitTrue();
+    }
 
-// More methods to be added
+
+    objPosArrayList* foodPos = thisfoodRef->getFoodPos();
+
+    for (int i = 0; i < foodPos->getSize(); i++){
+        objPos myFood = foodPos->getElement(i);
+
+        if(temphead.isPosEqual(&myFood)){
+        eatfood = true;
+            if(foodPos->getElement(i).getSymbol() == '$'){
+                for (int k = 0; k < 9; k++){
+                    mainGameMechsRef -> incrementScore();
+                }
+            }
+
+            else{
+                mainGameMechsRef->incrementScore();
+            }
+        }
+    }
+
+    if(eatfood){
+        thisfoodRef->generatefood(playerPosList);
+    }
+    else if(!eatfood){
+        playerPosList->removeTail();
+    }
+}
+
+bool Player::checkFoodConsumption(){
+
+}
+
+void Player::increasePlayerLength(){
+
+}
+
+bool Player::checkSelfCollision(){
+    for (int j = 1; j < playerPosList->getSize(); j++){
+        if (playerPosList->getHeadElement().isPosEqual(&playerPosList->getElement(j))) {
+            return true;
+        }
+    }
+    return false;
+}

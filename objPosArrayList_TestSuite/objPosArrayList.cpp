@@ -1,4 +1,5 @@
 #include "objPosArrayList.h"
+#include "objPos.h"
 #include <iostream>
 
 using namespace std;
@@ -29,14 +30,29 @@ objPosArrayList::objPosArrayList(const objPosArrayList &d)
     }
 }
 
+objPosArrayList& objPosArrayList::operator=(const objPosArrayList& d)
+{
+    if (this != &d){
+        delete[] aList;
+
+        listSize = d.listSize;
+        arrayCapacity = d.arrayCapacity;
+        aList = new objPos[d.arrayCapacity];
+        for(int i = 0; i < listSize; i++){
+        aList[i] = d.aList[i];
+        }
+    }
+    return *this;
+}
+
 int objPosArrayList::getSize() const
 {
-return listSize;
+    return listSize;
 }
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    if (listSize >= ARRAY_MAX_CAP){
+    if (listSize >= arrayCapacity){
         return;
     } 
     
@@ -51,7 +67,7 @@ void objPosArrayList::insertHead(objPos thisPos)
 void objPosArrayList::insertTail(objPos thisPos)
 {
     if(listSize >= arrayCapacity){
-        return;
+        throw std::out_of_range("Index out of bounds");
     }
 
     aList[listSize++] = thisPos;
@@ -59,8 +75,8 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 void objPosArrayList::removeHead()
 {
-    if (listSize == 0){
-        return;
+    if (listSize <= 0){
+        throw std::out_of_range("Index out of bounds");
     } 
 
     for (int i = 0; i < listSize - 1; i++){
